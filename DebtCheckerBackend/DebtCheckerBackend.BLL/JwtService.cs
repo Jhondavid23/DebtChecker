@@ -25,7 +25,8 @@ namespace DebtCheckerBackend.BLL
         public string GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
+            var secretKey = Environment.GetEnvironmentVariable("JWT_DEBT_SECRET_KEY") ?? throw new Exception("La variable de entorno JWT_DEBT_SECRET_KEY no está configurada");
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             var claims = new List<Claim>
             {
@@ -59,7 +60,8 @@ namespace DebtCheckerBackend.BLL
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
+                var secretKey = Environment.GetEnvironmentVariable("JWT_DEBT_SECRET_KEY") ?? throw new Exception("La variable de entorno JWT_DEBT_SECRET_KEY no está configurada");
+                var key = Encoding.ASCII.GetBytes(secretKey);
 
                 var validationParameters = new TokenValidationParameters
                 {

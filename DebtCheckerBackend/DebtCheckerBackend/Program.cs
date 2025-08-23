@@ -16,8 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // CONFIGURACIÓN DE AWS DYNAMODB
-var awsAccessKey = builder.Configuration["AWS:AccessKey"];
-var awsSecretKey = builder.Configuration["AWS:SecretKey"];
+var awsAccessKey = Environment.GetEnvironmentVariable("AWS_DEBT_ACCESS_KEY") ?? throw new Exception("La variable de entorno AWS_DEBT_ACCESS_KEY no está configurada");
+var awsSecretKey = Environment.GetEnvironmentVariable("AWS_DEBT_SECRET_KEY") ?? throw new Exception("La variable de entorno AWS_DEBT_SECRET_KEY no está configurada");
 var awsRegion = builder.Configuration["AWS:Region"] ?? "us-east-1";
 
 // Log para verificar configuración
@@ -65,8 +65,9 @@ builder.Services.AddSingleton<IAmazonDynamoDB>(provider =>
 
 // CONFIGURACIÓN DE JWT
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_DEBT_SECRET_KEY") ?? throw new Exception("La variable de entorno JWT_DEBT_SECRET_KEY no está configurada");
 
-if (jwtSettings == null || string.IsNullOrEmpty(jwtSettings.SecretKey))
+if (jwtSettings == null || string.IsNullOrEmpty(jwtSecretKey))
 {
     throw new InvalidOperationException("JWT settings are not configured properly in appsettings.json");
 }
@@ -84,7 +85,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwtSettings.Issuer,
             ValidAudience = jwtSettings.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey)),
             ClockSkew = TimeSpan.Zero
         };
     });
