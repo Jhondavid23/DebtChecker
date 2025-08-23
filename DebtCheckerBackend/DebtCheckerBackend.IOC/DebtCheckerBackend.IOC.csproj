@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DebtCheckerBackend.BLL\DebtCheckerBackend.BLL.csproj" />
+    <ProjectReference Include="..\DebtCheckerBackend.DAL\DebtCheckerBackend.DAL.csproj" />
+    <ProjectReference Include="..\DebtCheckerBackend.Utility\DebtCheckerBackend.Utility.csproj" />
+  </ItemGroup>
+
+</Project>
