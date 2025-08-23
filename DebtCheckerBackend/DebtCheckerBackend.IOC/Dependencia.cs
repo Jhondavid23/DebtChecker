@@ -36,7 +36,7 @@ namespace DebtCheckerBackend.IOC
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICacheService, DynamoDbCacheService>();
-
+            services.AddScoped<IDebtService, DebtService>();
         }
     }
 }

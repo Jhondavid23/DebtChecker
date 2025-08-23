@@ -6,6 +6,9 @@
 # dotenv files
 .env
 
+#appsettings
+DebtCheckerBackend/DebtCheckerBackend/appsettings.json
+
 # User-specific files
 *.rsuser
 *.suo
